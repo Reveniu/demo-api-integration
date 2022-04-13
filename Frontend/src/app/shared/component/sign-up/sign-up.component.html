@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="form-container">
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 15px;
+        flex-direction: column;
+      "
+    >
+      <h1 style="text-align: center; font-size: 30px; font-weight: 500">
+        Pollo Frito
+      </h1>
+      <lottie-player
+        src="/assets/fried-chicken.json"
+        background="transparent"
+        speed="1"
+        autoplay
+        loop
+        style="width: 100%"
+      >
+      </lottie-player>
+    </div>
+
+    <form [formGroup]="profileForm" class="input-container">
+      <h2 class="item animate__bounceIn">Registro:</h2>
+      <mat-form-field class="animate__bounceIn" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input type="name" name="name" matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="item animate__bounceIn" appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input type="email" name="email" matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="item animate__bounceIn" appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input type="text" name="phone" matInput formControlName="phone" />
+      </mat-form-field>
+      <mat-form-field class="item animate__bounceIn" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input type="password" name="password" matInput formControlName="password" />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="registrarse()"
+        [disabled]="creationInProgress"
+      >
+        Registrarse
+      </button>
+    </form>
+  </div>
+</div>

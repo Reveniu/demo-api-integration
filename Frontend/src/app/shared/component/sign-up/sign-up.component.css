@@ -1,0 +1,16 @@
+.container::after {
+  opacity: 0.5;
+}
+
+.form-container {
+  background-color: white;
+  padding: 50px;
+  width: 30%;
+  max-width: 450px;
+  min-width: 300px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}

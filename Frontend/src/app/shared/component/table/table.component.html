@@ -1,0 +1,167 @@
+<div style="padding: 20px 20px">
+  <div class="card">
+    <h1>Lista de suscripciones</h1>
+    <form>
+      <mat-form-field>
+        <input type="text" name="email" matInput placeholder="Buscar" [(ngModel)]="searchEmailText">
+        <mat-icon matSuffix (click)="searchEmail()">search</mat-icon>
+      </mat-form-field>
+    </form>
+    <p-table
+      #dt1
+      [value]="allSubs"
+      dataKey="id"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      styleClass="p-datatable-customers p-datatable-gridlines"
+      [paginator]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [globalFilterFields]="[
+        'name',
+        'country.name',
+        'representative.name',
+        'status'
+      ]"
+    >
+      <ng-template pTemplate="caption">
+        <p-button label="Exportar" (click)="exportData()"></p-button>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Nombre
+              <p-columnFilter
+                type="text"
+                field="customer.name"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Correo
+              <p-columnFilter
+                type="text"
+                field="customer.email"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Título
+              <p-columnFilter
+                type="text"
+                field="link_title"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Precio
+              <p-columnFilter
+                type="numeric"
+                field="plan_amount"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Ciclos
+              <p-columnFilter
+                type="text"
+                field="cicles"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Ciclos restantes
+              <p-columnFilter
+                type="numeric"
+                field="remaining_cicles"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Último pago
+              <p-columnFilter
+                type="date"
+                field="last_payment_date"
+                display="menu"
+              >
+              </p-columnFilter>
+            </div>
+          </th>
+          <th style="width: 8rem">
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Estatus
+              <p-columnFilter
+                type="text"
+                field="status"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th style="width: 8rem">
+            <div class="p-d-flex p-jc-between p-ai-center">Detalle</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-suscripcion>
+        <tr>
+          <td style="overflow: hidden">
+            {{ suscripcion.customer.name }}
+          </td>
+          <td style="overflow: hidden">
+            <span>{{ suscripcion.customer.email }}</span>
+          </td>
+          <td>
+            <span>{{ suscripcion.link_title }}</span>
+          </td>
+          <td>
+            {{ suscripcion.plan_amount }}
+          </td>
+          <td>
+            {{ suscripcion.cicles }}
+          </td>
+          <td>
+            {{ suscripcion.remaining_cicles }}
+          </td>
+          <td>
+            {{ suscripcion.last_payment_date | date: "dd/MM/yyyy" }}
+          </td>
+          <td class="p-text-center">
+            <div style="display: flex; justify-content: center">
+              <i class="pi true-icon pi-check-circle"></i>
+              {{ status_data[suscripcion.status] }}
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <i
+                class="pi pi-credit-card"
+                style="font-size: 1rem; cursor: pointer"
+                (click)="goToDetail(suscripcion.id)"
+                pTooltip='Detalle de la suscripción'
+              ></i>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No customers found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

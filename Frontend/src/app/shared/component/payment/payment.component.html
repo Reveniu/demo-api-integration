@@ -1,0 +1,27 @@
+<section>
+  <div class="container">
+    <h2>Selecciona un plan para acceder a nuestros beneficios 😄</h2>
+    <div class="container__card" *ngFor="let plan of plans">
+      <lottie-player
+        src="/assets/pay-in-cash.json"
+        background="transparent"
+        speed="1"
+        autoplay
+        loop
+        style="width: 100%"
+      >
+      </lottie-player>
+      <h1 style="text-align: center">Suscribete a la <b>{{plan.title}}</b></h1>
+      <div style="display: flex; justify-content: center">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="pay(plan.id)"
+          [disabled]="loadingPayment"
+        >
+          Suscribete
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+<p-menubar [model]="items" autoDisplay="true">
+  <ng-template pTemplate="start">
+    <img loading="lazy" src="assets/pollo.png" height="80" />
+  </ng-template>
+</p-menubar>
+<div class="container" style="height: calc(100% - 103px); overflow: auto">
+  <div style="width: 500px">
+    <div *ngIf="subscription_info; else nodata">
+      <p-card [header]="subscription_info.link_title">
+        <p>
+          {{ subscription_info.link_description }}
+        </p>
+        <p>
+          <span>Nombre del cliente:</span> {{ subscription_info.customer.name }}
+        </p>
+        <p>
+          <span>Correo del cliente:</span>
+          {{ subscription_info.customer.email }}
+        </p>
+        <p>
+          <span>Última de pago:</span>
+          {{ subscription_info.last_payment.date | date: "dd/MM/yy" }}
+        </p>
+        <div class="p-d-flex">
+          <p-button
+            label="Dar de baja suscripción"
+            class="p-mr-2"
+            *ngIf="subscription_info.status === '1'"
+            (click)="disableSub()"
+          ></p-button>
+          <p-button
+            label="Activar suscripción"
+            class="p-mr-2"
+            *ngIf="subscription_info.status !== '1'"
+            (click)="enableSub()"
+          ></p-button>
+        </div>
+      </p-card>
+      <div
+        style="
+          background-color: white;
+          font-size: 1.5rem;
+          margin: 0;
+          padding: 0 16px 10px;
+        "
+      >
+        <h2>Pagos</h2>
+      </div>
+      <table mat-table [dataSource]="dataSource" style="width: 100%">
+        <ng-container matColumnDef="issued_on">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.issued_on | date: "dd/MM/yyyy" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+          <td mat-cell *matCellDef="let element">CPL ${{ element.amount }}</td>
+        </ng-container>
+        <ng-container matColumnDef="buy_order">
+          <th mat-header-cell *matHeaderCellDef>No. Orden</th>
+          <td mat-cell *matCellDef="let element">{{ element.buy_order }}</td>
+        </ng-container>
+        <ng-container matColumnDef="credit_card_type">
+          <th mat-header-cell *matHeaderCellDef>Tarjeta</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.credit_card_type }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="is_recurrent">
+          <th mat-header-cell *matHeaderCellDef>Recurrente</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.is_recurrent ? "Si" : "No" }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <ng-template #nodata>
+      <ng-container *ngIf="loadingData; else noResult">
+        <div style="width: 100%">
+          <div style="display: flex; margin-top: 1rem; flex-direction: column">
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+          </div>
+          <div style="display: flex; margin-top: 1rem; flex-direction: column">
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+          </div>
+          <div style="display: flex; margin-top: 1rem; flex-direction: column">
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+            <p-skeleton width="100%" height="15px"></p-skeleton>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noResult>
+        <p-card header="No se han encontrado resultados">
+          <p>
+            Asegurese que su subcripción este activa o tenga acceso a
+            administrarla
+          </p>
+        </p-card>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>
